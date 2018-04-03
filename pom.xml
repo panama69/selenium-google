@@ -1,0 +1,82 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>net.mf</groupId>
+    <artifactId>se-google</artifactId>
+    <version>0.1</version>
+    <name>Selenium Google</name>
+    <description>Simple Selenium JUnit Test Against Goolge</description>
+
+    <properties>
+        <junit.ver>4.12</junit.ver>
+        <se.ver>3.4.0</se.ver>
+        <!--se.ver>2.53.1</se.ver-->
+        <lft-se.ver>1.0</lft-se.ver>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.ver}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>${se.ver}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.microfocus.adm.leanft</groupId>
+            <artifactId>leanft-selenium-java-sdk</artifactId>
+            <version>${lft-se.ver}</version>
+        </dependency>
+    </dependencies>
+
+    <repositories>
+        <!--<repository>
+                <id>Your repository's ID</id>
+                    <name>Your repository's name</name>
+                    <url>URL of the repository containing the LeanFT jar files</url>
+            </repository>-->
+    </repositories>
+
+    <build>
+        <plugins>
+            <plugin>
+                <!-- This plugin is key to create a LFT Maven project to have the jar file
+                       created so SRF can use it.
+                       More information on the plugin itself can be found
+                       http://maven.apache.org/plugins/maven-assembly-plugin/ -->
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                    <finalName>${project.artifactId}-${project.version}-with-se-${se.ver}</finalName>
+                    <appendAssemblyId>false</appendAssemblyId>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id> <!-- this is used for inheritance merges -->
+                        <phase>package</phase> <!-- bind to the packaging phase -->
+                        <!--phase>compile</phase--> <!-- bind to the compiling phase -->
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.7.0</version>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
